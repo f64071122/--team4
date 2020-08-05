@@ -33,7 +33,7 @@ def Search_Board():
     title_list = []
     href_list = []
     like_list = []
-    time_list = []
+    thing_list = []
 
     for i in range(15):  
         soup = BeautifulSoup(driver.page_source, 'html.parser') 
@@ -48,20 +48,20 @@ def Search_Board():
                 item = re.search('sc-1kuvyve-3',entry['class'][0])
                 if item is not None:
                     like_list.append(int(entry.text))
-        # 抓時間
+        # 抓貼文上面那一條(版,學校,時間)
         for entry in soup.select('div span'):
             if entry.has_attr('class'):
                 item = re.search('sc-6oxm01-2',entry['class'][0])
                 if item is not None:
-                    time_list.append(entry.text)
-
-        ct=0
-        Y=[]
-        for timell in time_list:
-            ct+=1
-            if(ct%3==0):
-                ct=0
-                Y.append(timell)
+                    thing_list.append(entry.text)
+        #抓上面那一條的時間
+        number=0
+        time_list=[]
+        for timell in thing_list:
+            number+=1
+            if(number%3==0):
+                number=0
+                time_list.append(timell)
   
         
         # 往下滑
@@ -70,7 +70,7 @@ def Search_Board():
     
     #print('title list length = ')
     #print(len(title_list))
-    return title_list[0:ARTICLE_NUM], href_list[0:ARTICLE_NUM], like_list[0:ARTICLE_NUM], time_list[0:ARTICLE_NUM],Y
+    return title_list[0:ARTICLE_NUM], href_list[0:ARTICLE_NUM], like_list[0:ARTICLE_NUM], thing_list[0:ARTICLE_NUM],time_list
 
 #把res = requests.get(url+href)改掉
 
