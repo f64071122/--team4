@@ -24,12 +24,6 @@ driver.get(url)
 
 
 def Search_Board():
-
-    #if not LATEST:
-    #    res = requests.get(url + '/f/' + BOARD)
-    #else:
-    #    res = requests.get(url + '/f/' + BOARD + '?latest=true')
-    #soup = BeautifulSoup(res.text, 'html.parser')
     title_list = []
     href_list = []
     like_list = []
@@ -42,7 +36,7 @@ def Search_Board():
             title_list.append(entry.text)
             href_list.append(entry['href'])
         
-        # 案讚數
+        # 按讚數
         for entry in soup.select('article div'):
             if entry.has_attr('class'):
                 item = re.search('sc-1kuvyve-3',entry['class'][0])
@@ -119,7 +113,7 @@ if __name__ == '__main__':
     ##############################################################################################################
     # Sort the articles according to likes number
     ##############################################################################################################
-    #把標題、案讚數、網址，依照案讚數排序
+    #把標題、按讚數、網址，依照按讚數排序
     for i in range(ARTICLE_NUM):
         for j in range(ARTICLE_NUM - i - 1):
             if like_list[j] < like_list[j + 1]:
@@ -174,9 +168,6 @@ if __name__ == '__main__':
     keynum=[t1,t2,t3,t4,t5,t6]
     
     keyword_title = "2018~2020討論podcast的文章"
-    #DrawBar(yr, keyword,keyword_title , myfont)
-    #plt.show()
-    #plt.savefig("2018~2020討論podcast的文章.jpg")
     
     plt.plot(yr,keynum,'-o')
     plt.show()
@@ -184,85 +175,85 @@ if __name__ == '__main__':
     
     print('=========================================================================================================')
 
-    
-    #找關鍵字和頻道
+    #這是不同人打得喔><
+    #找關鍵字(a)和頻道(b)
     a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20,a21,a22,a23,a24,a25=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     for i in range(ARTICLE_NUM):
         content, comment_list = Get_Article(href_list[i])
-        
-        if '新聞' in content:     #'關鍵字'
+        #'關鍵字'
+        if '新聞' in content:     
             a1=a1+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '好笑' in content:     #'關鍵字'
+        elif '好笑' in content:    
             a2=a2+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '聲音' in content:     #'關鍵字'
+        elif '聲音' in content:     
             a3=a3+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '有幫助' in content:     #'關鍵字'
+        elif '有幫助' in content:     
             a4=a4+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '生活' in content:     #'關鍵字'
+        elif '生活' in content:     
             a5=a5+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '學習' in content:     #'關鍵字'
+        elif '學習' in content:     
             a6=a6+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '有趣' in content:     #'關鍵字'
+        elif '有趣' in content:     
             a7=a7+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '知識' in content:     #'關鍵字'
+        elif '知識' in content:     
             a8=a8+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '充實' in content:     #'關鍵字'
+        elif '充實' in content:     
             a9=a9+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '歌' in content:     #'關鍵字'
+        elif '歌' in content:   
             a10=a10+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '輕鬆' in content:     #'關鍵字'
+        elif '輕鬆' in content:    
             a11=a11+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '聊天' in content:     #'關鍵字'
+        elif '聊天' in content:    
             a12=a12+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '資訊' in content:     #'關鍵字'
+        elif '資訊' in content:    
             a13=a13+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '旅遊' in content:     #'關鍵字'
+        elif '旅遊' in content:     
             a14=a14+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '通勤' in content:     #'關鍵字'
+        elif '通勤' in content:     
             a15=a15+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '工作' in content:     #'關鍵字'
+        elif '工作' in content:    
             a16=a16+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '時間' in content:     #'關鍵字'
+        elif '時間' in content:     
             a17=a17+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '正能量' in content:     #'關鍵字'
+        elif '正能量' in content:    
             a18=a18+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '故事' in content:     #'關鍵字'
+        elif '故事' in content:     
             a19=a19+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '沒負擔' in content:     #'關鍵字'
+        elif '沒負擔' in content:    
             a20=a20+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '時事' in content:     #'關鍵字'
+        elif '時事' in content:    
             a21=a21+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '議題' in content:     #'關鍵字'
+        elif '議題' in content:    
             a22=a22+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '成長' in content:     #'關鍵字'
+        elif '成長' in content:    
             a23=a23+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '新知' in content:     #'關鍵字'
+        elif '新知' in content:    
             a24=a24+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '幽默' in content:     #'關鍵字'
+        elif '幽默' in content:    
             a25=a25+1
             #print('(' +title_list[i]+ ')' + '\n')
  
@@ -273,82 +264,59 @@ if __name__ == '__main__':
     print('時間共有'+str(a17)+'篇','正能量共有'+str(a18)+'篇','故事共有'+str(a19)+'篇','沒負擔共有'+str(a20)+'篇')
     print('時事共有'+str(a21)+'篇','議題共有'+str(a22)+'篇','成長共有'+str(a23)+'篇','新知共有'+str(a24)+'篇','幽默共有'+str(a25)+'篇')
     print('=========================================================================================================')
+
     #b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14
     b = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    #b_label=[]
-    
     b_label=['台灣通勤第一品牌','百靈果','股癌','科技島讀','敏迪選讀','馬力歐陪你喝一杯','佐邊茶水間','Firstory Lab','TED Talks','財報狗','馬克信箱','心理學','法客電台']
     for i in range(ARTICLE_NUM):
         content, comment_list = Get_Article(href_list[i])
         #print('content'+str(i))
         #print(content)
-        if '台灣通勤第一品牌' in content:     #'頻道名'
+        #'頻道名'
+        if '台灣通勤第一品牌' in content:     
             b[0]=b[0]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '百靈果' in content:     #'頻道名'
+        elif '百靈果' in content:     
             b[1]=b[1]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '股癌' in content:     #'頻道名'
+        elif '股癌' in content:     
             b[2]=b[2]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '科技島讀' in content:     #'頻道名'
+        elif '科技島讀' in content:     
             b[3]=b[3]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '敏迪選讀' in content:     #'頻道名'
+        elif '敏迪選讀' in content:     
             b[4]=b[4]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '馬力歐陪你喝一杯' in content:     #'頻道名'
+        elif '馬力歐陪你喝一杯' in content:     
             b[5]=b[5]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '佐邊茶水間' in content:     #'頻道名'
+        elif '佐邊茶水間' in content:     
             b[6]=b[6]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '轉角國際 種磅廣播' in content:     #'頻道名'
+        elif '轉角國際 種磅廣播' in content:     
             b[7]=b[7]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif 'Firstory Lab' in content:     #'頻道名'
+        elif 'Firstory Lab' in content:     
             b[8]=b[8]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif 'TED Talks' in content:     #'頻道名'
+        elif 'TED Talks' in content:     
             b[9]=b[9]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '財報狗' in content:     #'頻道名'
+        elif '財報狗' in content:     
             b[10]=b[10]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '馬克信箱' in content:     #'頻道名'
+        elif '馬克信箱' in content:     
             b[11]=b[11]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '心理學' in content:     #'頻道名'
+        elif '心理學' in content:     
             b[12]=b[12]+1
             #print('(' +title_list[i]+ ')' + '\n')
-        elif '法客電台' in content:     #'頻道名'
+        elif '法客電台' in content:     
             b[13]=b[13]+1
             #print('(' +title_list[i]+ ')' + '\n')
+            
     print('台灣通勤第一品牌共有'+str(b[0])+'篇','百齡果共有'+str(b[1])+'篇','股癌共有'+str(b[2])+'篇','科技島讀'+str(b[3])+'篇')
     print('敏迪選讀共有'+str(b[4])+'篇','馬力歐陪你喝一杯共有'+str(b[5])+'篇','佐邊茶水間共有'+str(b[6])+'篇','轉角國際 種磅廣播'+str(b[7])+'篇')
     print('Firstory Lab共有'+str(b[8])+'篇','TED Talks共有'+str(b[9])+'篇','財報狗共有'+str(b[10])+'篇','馬克信箱共有'+str(b[11])+'篇')
     print('心理學共有'+str(b[12])+'篇','法客電台共有'+str(b[13])+'篇')
-#    tit = '頻道提及數'
-#    DrawBar(b_label, b , tit, myfont)
-#    plt.show()
-    '''##############################################################################################################
-    # Print the article with most likes
-    ##############################################################################################################
-    content, comment_list = Get_Article(href_list[0])
-    print('\n=============================================最多人按讚的文章=============================================\n')
-    print(title_list[0] + '\n')
-    print(content)
-    print('\n==================================================回應===================================================\n')
-    for i in range(len(comment_list)):
-        if i >= COMMENT_NUM:
-            break
-        print(comment_list[i] + '\n')
-        if i < COMMENT_NUM - 1:
-            print('----------------------------------------------------------------------------------------------------------\n')
-    print('=========================================================================================================')
-
-    plt.show() # Show the figure
-        
-    '''
-    
-
