@@ -90,13 +90,6 @@ def Get_Article(href):
 
     return content, comment_list
 
-
-def DrawBar(x_list, y_list, title, font):
-    plt.title(title, fontproperties = font)
-    plt.bar(x_list, y_list)
-    plt.xticks(x_list,x_list,fontproperties = font,rotation=90)
-    return
-
 if __name__ == '__main__':
 
     title_list, href_list, like_list,thing_list,time_list = Search_Board() # Search the board and get article titles and likes number of each article
@@ -105,11 +98,7 @@ if __name__ == '__main__':
     # Plot the like number of each article as histogram
     ##############################################################################################################
     myfont = FontProperties(fname=r'./GenYoGothicTW-Regular.ttf')
-    '''
-    title = '每篇文章讚數'
-    DrawBar(list(range(1,ARTICLE_NUM + 1)), like_list, title, myfont)
-    plt.show()
-    '''
+  
     ##############################################################################################################
     # Sort the articles according to likes number
     ##############################################################################################################
@@ -174,7 +163,7 @@ if __name__ == '__main__':
 
     
     #這是不同人打得喔>< 
-    #找關鍵字(a)和頻道(b)
+    
     #找關鍵字和頻道
     
     searchkeyword=[]
