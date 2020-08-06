@@ -16,11 +16,15 @@ COMMENT_NUM = 3
 KEYWORD = 'podcast'
 
 # chrome driver
+'''
 chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.default_content_setting_values.notifications" : 2}
 chrome_options.add_experimental_option("prefs",prefs)
 driver=webdriver.Chrome("chromedriver",chrome_options=chrome_options)
+'''
+driver = webdriver.Edge("C:\\Users\\linti\\Desktop\\crawler\\msedgedriver.exe")
 driver.get(url)
+
 
 
 def Search_Board():
@@ -45,16 +49,15 @@ def Search_Board():
         # 抓貼文上面那一條(版,學校,時間)
         for entry in soup.select('div span'):
             if entry.has_attr('class'):
-                item = re.search('sc-6oxm01-2',entry['class'][0])
+                item = re.search('sc-6oxm01-3',entry['class'][0])
                 if item is not None:
                     thing_list.append(entry.text)
         #抓上面那一條的時間
-        number=0
         time_list=[]
         for timell in thing_list:
-            number+=1
-            if(number%3==0):
-                number=0
+            pattern1 =r"\d+ 月 \d+ 日"
+            pattern2 =r"\d+ 年 \d+ 月 \d+ 日"
+            if re.fullmatch(pattern1,timell) or re.fullmatch(pattern2,timell):
                 time_list.append(timell)
   
         
@@ -72,7 +75,7 @@ def Get_Article(href):
 
     res = requests.get('http://www.dcard.tw'+href)
     soup = BeautifulSoup(res.text, 'html.parser')
-    comment_list = []
+    #comment_list = []
     content = ''
 
 
@@ -81,14 +84,15 @@ def Get_Article(href):
             item = re.search('sc-4ihej7-0',entry['class'][0])
             if item is not None:
                 content+=entry.text
-            
+    '''        
     for entry in soup.select('div#comment-anchor div'):
         if entry.has_attr('class'):
             item = re.search('giORMG',entry['class'][1])
             if item is not None:
                 comment_list.append(entry.text)
+    '''
+    return content
 
-    return content, comment_list
 
 if __name__ == '__main__':
 
@@ -109,7 +113,7 @@ if __name__ == '__main__':
                 title_list[j], title_list[j + 1] = title_list[j + 1], title_list[j]
                 href_list[j], href_list[j + 1] = href_list[j + 1], href_list[j]
                 like_list[j], like_list[j + 1] = like_list[j + 1], like_list[j]
-
+    #每半年文章數量累加
     for i in range(ARTICLE_NUM):
         print('(' + str(like_list[i]) + ')', end = ' ')
         print(title_list[i], end = ' ')
@@ -123,35 +127,50 @@ if __name__ == '__main__':
     first_half_year_2020=0
     second_half_year_2020=0
     for i in range(ARTICLE_NUM):
-        time=time_list[i]
+        time = time_list[i]
         if '2018' in time:
-            if ('12月' in time) or ('11月' in time) or ('10月' in time) or ('9月' in time) or ('8月' in time) or ('7月' in time):
+            if ('12 月' in time) or ('11 月' in time) or ('10 月' in time) or ('9 月' in time) or ('8 月' in time) or ('7 月' in time):
                 second_half_year_2018+=1
             else:
                 first_half_year_2018+=1
         elif '2019' in time:
-            if ('12月' in time) or ('11月' in time) or ('10月' in time) or ('9月' in time) or ('8月' in time) or ('7月' in time):
+            if ('12 月' in time) or ('11 月' in time) or ('10 月' in time) or ('9 月' in time) or ('8 月' in time) or ('7 月' in time):
                 second_half_year_2019+=1
             else:
                 first_half_year_2019+=1
 
         else:
-             if ('12月' in time) or ('11月' in time) or ('10月' in time) or ('9月' in time) or ('8月' in time) or ('7月' in time):
+             if ('12 月' in time) or ('11 月' in time) or ('10 月' in time) or ('9 月' in time) or ('8 月' in time) or ('7 月' in time):
                 second_half_year_2020+=1
              else:
                 first_half_year_2020+=1
-
-    total_1=first_half_year_2018
-    total_2=first_half_year_2018+second_half_year_2018
-    total_3=first_half_year_2018+second_half_year_2018+first_half_year_2019
-    total_4=first_half_year_2018+second_half_year_2018+first_half_year_2019+second_half_year_2019
-    total_5=first_half_year_2018+second_half_year_2018+first_half_year_2019+second_half_year_2019+first_half_year_2020
-    total_6=first_half_year_2018+second_half_year_2018+first_half_year_2019+second_half_year_2019+first_half_year_2020+second_half_year_2020
+    #每半年文章數量累加
+    total_1 = first_half_year_2018
+    total_2 = total_1 + second_half_year_2018
+    total_3 = total_2 + first_half_year_2019
+    total_4 = total_3 + second_half_year_2019
+    total_5 = total_4 + first_half_year_2020
+    total_6 = total_5 + second_half_year_2020
     
-    print('2018上半年:',first_half_year_2018,'2018下半年:',second_half_year_2018,'2019上半年:',first_half_year_2019,'2019下半年:',second_half_year_2019,'2020上半年:',first_half_year_2020,'2020下半年:',second_half_year_2020)
-    yr=['first half of 2018','second half of 2018','first half of 2019','second half of 2019','first half of 2020','second half of 2020']
-    keyword=[first_half_year_2018,second_half_year_2018,first_half_year_2019,second_half_year_2019,first_half_year_2020,second_half_year_2020]
-    keynum=[total_1,total_2,total_3,total_4,total_5,total_6]
+    print('2018上半年:',first_half_year_2018,
+            '2018下半年:',second_half_year_2018,
+            '2019上半年:',first_half_year_2019,
+            '2019下半年:',second_half_year_2019,
+            '2020上半年:',first_half_year_2020,
+            '2020下半年:',second_half_year_2020)
+    yr=['first half of 2018',
+        'second half of 2018',
+        'first half of 2019',
+        'second half of 2019',
+        'first half of 2020',
+        'second half of 2020']
+    keyword=[first_half_year_2018,
+                second_half_year_2018,
+                first_half_year_2019,
+                second_half_year_2019,
+                first_half_year_2020,
+                second_half_year_2020]
+    keynum=[total_1, total_2, total_3, total_4, total_5, total_6]
     
     keyword_title = "2018~2020討論podcast的文章"
     
@@ -160,57 +179,30 @@ if __name__ == '__main__':
     plt.savefig("2018~2020發文數-折線圖.jpg")
     
     print('=========================================================================================================')
-
-    
-    #這是不同人打得喔>< 
-    
-    #找關鍵字和頻道
-    
-    searchkeyword=[]
-    keywordnum=[]
-    
-    while 1:
-        word=input('Please enter the word you want to search(輸入a則完成輸入):')
-        if word=="a":
-            break
-        else:
-            searchkeyword.append(word)
-
-            for i in range(len(searchkeyword)):
-                keywordnum.append(0)
-                
-   
-    
-    for i in range(ARTICLE_NUM):
-        content, comment_list = Get_Article(href_list[i])
-        for j in range(len(searchkeyword)):
-            if searchkeyword[j] in content:     #'關鍵字或頻道名'
-                keywordnum[j]+=1
-        
-    for i in range(len(searchkeyword)):
-        print(searchkeyword[i],'共',keywordnum[i],'篇')
-
-    channel=[]
-    channelnum=[]
+    def search_function(what):   
+        search_what=[]
+        what_num=[]
+        search_what.append(what)
+        #set default of number as 0
+        for i in range(len(search_what)):
+            what_num.append(0)
+        #get the number of keyword in contents             
+        for i in range(ARTICLE_NUM):
+            content = Get_Article(href_list[i]) #只抓content, no comment
+            for j in range(len(search_what)):
+                if search_what[j] in content:
+                    what_num[j] += 1    
+        for i in range(len(search_what)):
+            print(search_what[i],'共',what_num[i],'篇')
     
     while 1:
-        word=input('Please enter the word you want to search(輸入a則完成輸入):')
-        if word=="a":
+        print("想要找什麼頻道或是關鍵字?(輸入stop則結束輸入)")
+        search_what = input()
+        #word=input('Please enter the word you want to search(輸入stop則結束輸入):')
+        if search_what =="stop":
             break
         else:
-            channel.append(word)
+            search_function(search_what)
+        print("(*´ω`)人(´ω`*)")
 
-            for i in range(len(channel)):
-                channelnum.append(0)
-                
-   
-    
-    for i in range(ARTICLE_NUM):
-        content, comment_list = Get_Article(href_list[i])
-        for j in range(len(channel)):
-            if channel[j] in content:     #'關鍵字或頻道名'
-                channelnum[j]+=1
-        
-    for i in range(len(channel)):
-        print(channel[i],'共',channelnum[i],'篇')
         
